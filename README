@@ -1,2 +1,2 @@
-RestIgniter it's equal to Code Igniter stable version plus REST support. 
-RestIgniter allows you to drop your object class file in a directory and to see automatically exposed through REST. 
+RestIgniter it's equal to Code Igniter stable version (v. 2.0.3) plus sparks and REST support. 
+RestIgniter allows you to drop your object class file in a directory and to see it automatically exposed through REST. 
