@@ -27,15 +27,31 @@ class Api extends REST_Controller
 		parent::__construct();
 		
 		$this->__getExposedObjs();
-			
+		
+		$this->loadSparks();
+		
 		$this->__getMyMethods();
 	}
 
-	protected function __getExposedObjs()
+	public function __getExposedObjs()
 	{
 		$exposedObjects = $this->config->item('exposeObj');
 		
 		if(!empty($exposedObjects)) $this->exposedObjects = $exposedObjects;
+	}
+	
+	private function loadSparks()
+	{
+		if(!empty($this->exposedObjects))
+		{
+			foreach ($this->exposedObjects as $item => $value) {
+				if(preg_match('/\//i', $value))
+				{
+					$this->load->spark($value);
+				}
+			}
+			
+		}
 	}
 	
 	/**
@@ -181,6 +197,7 @@ class Api extends REST_Controller
 		}
 	}
 	
+	
 	/**
 	 * 
 	 * Grabs all the parameters from $this->get,put,post,delete and merges them together
@@ -222,7 +239,32 @@ class Api extends REST_Controller
 		
 		if($model and $calledMethod) $this->remoteObject($model, $calledMethod, $this->getInput());
 	}
+	
+	/**
+	 * 
+	 * Discovers and load the object to expose over REST
+	 * @param string $model The name of the object class
+	 * @return boolean
+	 */
+	private function loadObject($model)
+	{
+		//looks like there is no better way to check if a model exists. Check this:
+		//http://stackoverflow.com/questions/7017810/php-and-codeigniter-how-do-you-check-if-a-model-exists-and-or-not-throw-an-error
+		if(isset($this->exposedObjects[$model]) & file_exists(APPPATH."models/$model.php"))	
+		{
+			$this->load->model($model);
+			return true;
+		}
 
+		//it might be an object contained in a spark but then it should be already loaded by the autoload file. Let's check
+		if(is_object($this->$model)) 
+		{
+			return true;
+		}
+				
+		return false;
+	}
+	
 	/**
 	 * 
 	 * This is the core of RestIgniter. Takes the object and via reflection exposes its method over REST
@@ -234,21 +276,7 @@ class Api extends REST_Controller
 	{
 		if(!empty($model) and is_array($model)) return false;
 		
-		//looks like there is no better way to check if a model exists. Check this:
-		//http://stackoverflow.com/questions/7017810/php-and-codeigniter-how-do-you-check-if-a-model-exists-and-or-not-throw-an-erro
-		if(file_exists(APPPATH."models/$model.php"))
-		{
-			if(isset($this->exposedObjects[$model])) $this->load->model($model);
-		}
-		else{
-			//let's see if it's a spark
-			if(isset($this->exposedObjects[$model]))
-			{
-				$this->load->spark($this->exposedObjects[$model]);
-			} else {
-				return false; //no model found
-			}
-		}			
+		if(!$this->loadObject($model)) return false; // TODO maybe this might be more meaninful than just false
 			
 		//Using reflection to get the class methods
 		$reflection = new ReflectionClass($this->$model);
@@ -259,7 +287,8 @@ class Api extends REST_Controller
 		//get properties for each method
 		if(!empty($methods))
 		{
-			foreach ($methods as $method) {
+			foreach ($methods as $method) 
+			{
 				if(!empty($method->name))
 				{
 					$methodProp = new ReflectionMethod($this->$model, $method->name);
@@ -279,22 +308,24 @@ class Api extends REST_Controller
 								{
 									if(!is_array($data)) $data = (array) $data;
 									$this->response($data, 200);
-									return TRUE;
+									return;
 								} else {
 									// TODO this can be done much better and be more meaningful
 									$this->response(array('error' => 'Something went wrong'), 400);
-									return FALSE;
+									return;
 								}
 							}
 						}
-					}
-					if(!empty($calledMethod))
-					{
-						$this->response(array('error' => 'The object '.$model.' has no public method called '.$calledMethod), 404);
-					}			
+					}		
 				}
 			}
+			
+			//if we are still here than a wrong method has been passed
+			if(!empty($calledMethod))
+			{
+				$this->response(array('error' => 'The object '.$model.' has no public method called '.$calledMethod), 404);
+			}			
 		}
-		return true;
+		//return true;
 	}
 }
