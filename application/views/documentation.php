@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>CodeIgniter 2 - XMLRPC Example</title>
+<title>RestIgniter Documentation</title>
 
 <style type="text/css">
 body {
