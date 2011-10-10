@@ -303,7 +303,8 @@ class Api extends REST_Controller
 						// passes the input to the called method of the exposed object
 						if(!preg_match('/^_/', $method->name, $matches))
 						{
-							$method_short_name = strstr($method->name, '_',true); //remove _get _post _delete _update if present
+							$method_short_name = strstr($method->name, '_',true); //remove _get _post _delete _update if present otherwise returns false
+							if(!$method_short_name) $method_short_name = $method->name;
 							$method_name = $method->name;
 							if($method_short_name == $calledMethod)
 							{							
