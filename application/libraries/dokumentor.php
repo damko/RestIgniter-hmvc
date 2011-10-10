@@ -14,12 +14,6 @@ class Dokumentor extends CI_Controller {
 		$this->rest->initialize(array('server' => $this->config->item('rest_server')));
 	}
 
-// 	public function index()
-// 	{
-// 		$data['methods_list'] = $this->displayAPI(array('chartex'));
-// 		$this->load->view('ex_expose',$data);
-// 	}
-
 	private function __print($data)
 	{
 		echo '<pre>';
@@ -91,12 +85,15 @@ class Dokumentor extends CI_Controller {
 	{
 			$methods_html = '<h4>Object: '.$object.'</h4>';
 			$methods_html .= '<dl>';
-			foreach ( $methods->$object->functions as  $method) {
-				if(empty($method->docstring))
-				{
-					$methods_html .= '<dt>'.$method->function.'</dt><dd>No description available</dd>';
-				} else {
-					$methods_html .= '<dt>'.$method->function.'</dt><dd>'.$method->docstring.'</dd>';
+			if(is_object($methods->$object))
+			{
+				foreach ( $methods->$object->functions as  $method) {
+					if(empty($method->docstring))
+					{
+						$methods_html .= '<dt>'.$method->function.'</dt><dd>No description available</dd>';
+					} else {
+						$methods_html .= '<dt>'.$method->function.'</dt><dd>'.$method->docstring.'</dd>';
+					}
 				}
 			}
 			$methods_html .= '</dl>';	
