@@ -108,7 +108,18 @@ Rest Igniter is <a href="http://codeigniter.com/" target="_blank">Code Igniter</
     		<li><a href="<?php echo site_url('ex_rest_client'); ?>">Usage as a rest client</a></li>
     		<li><a href="<?php echo site_url('ex_rest_client2'); ?>">Usage as a rest server</a></li>
     		<li><a href="<?php echo site_url('ex_expose'); ?>">Exposing an object</a></li>
-    	</ul> 	
+    	</ul>
+    	
+    	<h2>Add-ons</h2>
+    	<ul>
+    		<li><a href="">ri_ldap</a>: an easy spark library to operate with ldap</li>
+    		<li><a href="">ri_contact_engine</a>: a spark library to handle People Organizations and Locations</li>
+    	</ul>
+    	
+    	<h2>Applications using R.I.</h2>
+    	<ul>
+    		<li><a href="">MCB-SB</a>: an invoice manager for small businesses based on <a href="http://www.myclientbase.com" target="_blank">MCB</a></li>
+    	</ul>    	 	    	    	 	
     </div>
     <div id="left"><img src="images/restigniter.png"></div>
 </div> 
