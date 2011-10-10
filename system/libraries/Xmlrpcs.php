@@ -422,6 +422,7 @@ class CI_Xmlrpcs extends CI_Xmlrpc
 	function methodSignature($m)
 	{
 		$parameters = $m->output_parameters();
+		
 		$method_name = $parameters[0];
 
 		if (isset($this->methods[$method_name]))
@@ -467,6 +468,7 @@ class CI_Xmlrpcs extends CI_Xmlrpc
 	function methodHelp($m)
 	{
 		$parameters = $m->output_parameters();
+
 		$method_name = $parameters[0];
 
 		if (isset($this->methods[$method_name]))

@@ -119,13 +119,9 @@ class CI_DB_mysql_forge extends CI_DB_forge {
 					$sql .= ' DEFAULT \''.$attributes['DEFAULT'].'\'';
 				}
 
-				if (array_key_exists('NULL', $attributes) && $attributes['NULL'] === TRUE)
+				if (array_key_exists('NULL', $attributes))
 				{
-					$sql .= ' NULL';
-				}
-				else
-				{
-					$sql .= ' NOT NULL';
+					$sql .= ($attributes['NULL'] === TRUE) ? ' NULL' : ' NOT NULL';
 				}
 
 				if (array_key_exists('AUTO_INCREMENT', $attributes) && $attributes['AUTO_INCREMENT'] === TRUE)
