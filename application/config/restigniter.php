@@ -13,7 +13,7 @@
  */
 
 $config['exposeObj'] = array(
-								'chartex' => 'chartex/0.0.1' 
+								'chartex' => 'chartex/0.0.1',
 							);
 
 /* End of restigniter.php */
