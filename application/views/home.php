@@ -92,13 +92,14 @@ div#left{
 
 <div id="container">
 <p>
-Rest Igniter is <a href="http://codeigniter.com/" target="_blank">Code Igniter</a> (stable version 2.0.3)* plus <a href="http://getsparks.org" target="_blank">Sparks</a> and Rest support. 
+Rest Igniter is <a href="http://codeigniter.com/" target="_blank">Code Igniter</a> (stable version 2.0.3) plus <a href="http://getsparks.org" target="_blank">Sparks</a> and Rest support. 
 <b>In addiction, its aim is to allow an easy share of php objects over REST.</b>
 </p>
     <div id="right">
     	<h2>References</h2>
     	<ul>
     		<li><a href="https://github.com/damko/RestIgniter" target="_blank">Project Page</a></li>
+    		<li><a href="http://ri.squadrainformatica.com" target="_blank">Live Demo</a></li>
     		<li><a href="<?php echo site_url('home/documentation'); ?>">Documentation</a></li>
     	</ul>
 
