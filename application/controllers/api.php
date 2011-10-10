@@ -173,15 +173,18 @@ class Api extends REST_Controller
 	public function methods_get()
 	{
 		$input = $this->getInput();
-		//let's document the given Object methods
+		
 		if(!empty($input['object']))
 		{
-			//make the analysis
+			//make the analysis of the required object
 			$this->__getMyMethods($input['object']);
-						
-			//return the methods
-			$this->response($this->builtInMethods, 200);
+		} else {
+			//make the analysis of the REST server itself
+			$this->__getMyMethods();				
 		}
+		
+		//return the methods
+		$this->response($this->builtInMethods, 200);
 		
 	}
 
