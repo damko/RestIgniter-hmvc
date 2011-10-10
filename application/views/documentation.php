@@ -93,8 +93,20 @@ Here you can find a detailed info about his library:</p>
 <?php echo !empty($methods_list) ? $methods_list : 'No public methods available'; ?>
 You can see all the available methods for the REST server at this <a href="<?php echo site_url('api/methods')?>">URL</a>
 <hr />
-<br/>
 
+<h3>How to install</h3>
+<p>
+This will download the code to your /var/www/restigniter folder</p>
+<pre>
+cd /var/www/
+git clone https://damko@github.com/damko/RestIgniter.git restigniter
+</pre>
+<p>
+Edit application/config/rest.php and edit the $config['rest_server'] changing the hostname accordingly to your needs.
+</p>
+
+
+<hr />
 [<a href="<?php echo site_url(''); ?>">Home</a>]
 </body>
 </html>
