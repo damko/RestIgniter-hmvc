@@ -17,13 +17,23 @@
 require APPPATH.'/libraries/REST_Controller.php';
 
 class Api extends REST_Controller
-{
+{	
 	protected $builtInMethods;
-	protected $conf;
+	
+	//protected $conf;
+	protected $started;
+	protected $finished;
+	protected $duration;
+	protected $status_code;
+	protected $error_message;
+	
 	protected $exposedObjects = array();
 
 	public function __construct($class=null)
 	{
+		date_default_timezone_set('Europe/Rome');
+		$this->started = mktime();
+		
 		parent::__construct();
 		
 		$this->__getExposedObjs();
@@ -266,6 +276,7 @@ class Api extends REST_Controller
 		return is_object($this->$model) ? true : false; 
 	}
 	
+	
 	/**
 	 * 
 	 * This is the core of RestIgniter. 
@@ -309,19 +320,44 @@ class Api extends REST_Controller
 							if($method_short_name == $calledMethod)
 							{							
 								$data = array();
-		
-								$data = $this->$model->$method_name($input);
-														
-								if($data)
+								$return = array();
+								
+								$data = $this->$model->$method_name($input);	
+								
+								if(!$data)
 								{
-									if(!is_array($data)) $data = (array) $data;
-									$this->response($data, 200);
-									return;
+									if(empty($data['error']))
+									{
+										$return['status'] = $this->getReturnStatus('400','Something went wrong');
+									} else {
+										$return['status'] = $this->getReturnStatus('400',(string) $data['error']);
+									}
 								} else {
-									// TODO this can be done much better and be more meaningful
-									$this->response(array('error' => 'Something went wrong'), 400);
-									return;
-								}
+									$dimension = dimensions($data);
+									switch ($dimension) {
+										case '0':
+											$return['data'] = (array) $data;
+											$return['status'] = $this->getReturnStatus('200');
+										break;
+										
+										case '1':
+											$return['data'] = $data;
+											$return['status'] = $this->getReturnStatus('200');
+										break;
+																					
+										case '2':
+											if(isset($data['data']))
+											{
+												$return['data'] = $data['data'];
+												$return['status'] = $this->getReturnStatus('200');
+											} else {
+												$return['status'] = $this->getReturnStatus('400','Data format is wrong');
+											}
+										break;
+									}
+								}								
+								$this->response($return, $this->status_code);
+								return;
 							}
 						}
 					}		
@@ -331,9 +367,26 @@ class Api extends REST_Controller
 			//if we are still here than a wrong method has been passed
 			if(!empty($calledMethod))
 			{
-				$this->response(array('error' => 'The object '.$model.' has no public method called '.$calledMethod), 404);
+				$return['status'] = $this->getReturnStatus('404','The object '.$model.' has no public method called '.$calledMethod);
+				$this->response($return, $this->status_code);
+				return;
 			}			
 		}
 		return true;
+	}
+	
+	private function getReturnStatus($http_status, $error_message = null)
+	{
+		$this->finished = mktime();
+		$this->duration = $this->finished - $this->started;
+		$this->status_code = $http_status;  //TODO Should I check if the status is in the standard set for REST?
+		if($this->status_code != '200') $this->error_message = $error_message;
+		
+		$status = array();
+		$status['status_code'] = $this->status_code;
+		if(!empty($this->error_message)) $status['error_message'] = $this->error_message;  
+		$status['duration'] = $this->duration;
+		
+		return $status;
 	}
 }

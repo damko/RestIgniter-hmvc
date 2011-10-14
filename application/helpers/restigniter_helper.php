@@ -21,5 +21,12 @@ function methods_HTML($methods,$object)
 	return $methods_html;
 }
 
-
+function dimensions($input)
+{
+	if(!is_array($input)) return 0;
+	
+	foreach ($input as $key => $value) {
+		return is_array($value) ? 2 : 1;
+	}
+}
 /* End of restigniter_helper.php */

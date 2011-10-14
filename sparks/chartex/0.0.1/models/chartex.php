@@ -31,7 +31,7 @@ class Chartex extends CI_Model
 		foreach ($items as $key => $value) {
 			$this->chart_items[$key] = $value;
 		}
-		return $this->read();
+		return $this->read_get();
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class Chartex extends CI_Model
 		foreach ($items as $key => $value) {
 			unset($this->chart_items[$key]);
 		}		
-		return $this->read();
+		return $this->read_get();
 	}
 	
 	/**
@@ -86,7 +86,7 @@ class Chartex extends CI_Model
 	private function delete()
 	{
 		$this->chart_items = array('');
-		return $this->read();
+		return $this->read_get();
 	}
 
 }
