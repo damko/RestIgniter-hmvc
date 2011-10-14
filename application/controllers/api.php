@@ -383,9 +383,10 @@ class Api extends REST_Controller
 		if($this->status_code != '200') $this->error_message = $error_message;
 		
 		$status = array();
+		$status['finished'] = $this->finished;
+		$status['duration'] = $this->duration;
 		$status['status_code'] = $this->status_code;
 		if(!empty($this->error_message)) $status['error_message'] = $this->error_message;  
-		$status['duration'] = $this->duration;
 		
 		return $status;
 	}
