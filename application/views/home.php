@@ -101,6 +101,7 @@ Rest Igniter is <a href="http://codeigniter.com/" target="_blank">Code Igniter</
     		<li><a href="https://github.com/damko/RestIgniter" target="_blank">Project Page</a></li>
     		<li><a href="http://ri.squadrainformatica.com" target="_blank">Live Demo</a></li>
     		<li><a href="<?php echo site_url('home/documentation'); ?>">Documentation</a></li>
+    		<li><a href="<?php echo site_url('api_tests'); ?>">Php unit tests</a></li>
     	</ul>
 
     	<h2>Examples</h2>
