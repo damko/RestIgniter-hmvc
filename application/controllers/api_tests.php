@@ -73,30 +73,30 @@ class Api_Tests extends CI_Controller {
 		$this->printReturn($rest_return);
 	}	
 	
-	private function arrayReturn($method, $rest_return)
+	private function arrayReturn($method, $rest_return, $note = null)
 	{
-		echo $this->unit->run($rest_return, 'is_array', $method.'- array in return ?');
-	}	
+		echo $this->unit->run($rest_return, 'is_array', $method.'- array in return ?', $note);
+	}
 	
 	private function anyError($rest_return)
 	{
 		$test = (array) $rest_return['status'];		
 		return isset($test['error_message']) ? true : false;
 	}
-	
-	private function checkNoRestError($method, $rest_return)
+		
+	private function checkNoRestError($method, $rest_return, $note = null)
 	{
 		$expected_result = false;
 		$test = $this->anyError($rest_return);
-		echo $this->unit->run($test, $expected_result, $method.'- any REST error ?');
+		echo $this->unit->run($test, $expected_result, $method.'- any REST error ?', $null);
 	}
 	
-	private function check200($method, $rest_return)
+	private function check200($method, $rest_return, $note = null)
 	{
 		$expected_result = '200';
 		$test = (array) $rest_return['status'];
 		$test = $test['status_code'];
-		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?');
+		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
 	}
 	
 	private function printReturn($rest_return)
@@ -105,7 +105,8 @@ class Api_Tests extends CI_Controller {
 		echo '<pre style="font-size: 9px; background-color: #e8e8e8;">';
 		print_r($rest_return);
 		echo '</pre>';
-	}
+	}	
+	
 }
 
 /* End of api_tests.php */
