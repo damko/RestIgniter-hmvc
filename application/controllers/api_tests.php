@@ -78,9 +78,10 @@ class Api_Tests extends CI_Controller {
 		echo $this->unit->run($rest_return, 'is_array', $method.'- array in return ?');
 	}	
 	
-	private function anyError($input)
+	private function anyError($rest_return)
 	{
-		isset($input['error']) ? true : false;
+		$test = (array) $rest_return['status'];		
+		return isset($test['error_message']) ? true : false;
 	}
 	
 	private function checkNoRestError($method, $rest_return)
