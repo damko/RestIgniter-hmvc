@@ -355,18 +355,20 @@ class Api extends REST_Controller
 		
 		if(!$data)
 		{
-			if(empty($data['error']))
+			if(empty($this->status_code) or empty($this->error_message))
 			{
-				if(empty($this->status_code) or empty($this->error_message))
-				{
-					$return['status'] = $this->setReturnStatus('400','Something went wrong');
-				}
-			} else {
+				$return['status'] = $this->setReturnStatus('400','Something went wrong');
+			}
+		} else {
+			if(!empty($data['error']))
+			{
 				$return['status'] = $this->setReturnStatus('400',(string) $data['error']);
 				unset($data['error']); //cleanup data from errors
 			}
-		} else {
-			$dimension = dimensions($data);
+			
+			$return['data'] = $data['data'];
+						
+/* 			$dimension = dimensions($data);
 			switch ($dimension) {
 				case '0':
 					$return['data'] = (array) $data;
@@ -387,7 +389,7 @@ class Api extends REST_Controller
 						$return['status'] = $this->setReturnStatus('400','Data format is wrong');
 					}
 					break;
-			}
+			} */
 		}
 		
 		
