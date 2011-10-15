@@ -32,7 +32,7 @@ class Api extends REST_Controller
 	public function __construct($class=null)
 	{
 		date_default_timezone_set('Europe/Rome');
-		$this->started = mktime();
+		$this->started = microtime(true);
 		
 		parent::__construct();
 		
@@ -343,7 +343,7 @@ class Api extends REST_Controller
 	
 	private function setReturnStatus($http_status, $error_message = null)
 	{
-		$this->finished = mktime();
+		$this->finished = microtime(true);
 		$this->duration = $this->finished - $this->started;
 		$this->status_code = $http_status;  //TODO Should I check if the status is in the standard set for REST?
 		if($this->status_code != '200') $this->error_message = $error_message;
