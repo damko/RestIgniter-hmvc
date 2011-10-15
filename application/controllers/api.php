@@ -184,7 +184,7 @@ class Api extends REST_Controller
 	{
 		$input = $this->getInput();
 		
-		if(!empty($input['object']))
+		if(!empty($input['object']) and $this->loadObject($input['object']))
 		{
 			//make the analysis of the required object
 			$this->__getMyMethods($input['object']);
@@ -320,44 +320,10 @@ class Api extends REST_Controller
 							if($method_short_name == $calledMethod)
 							{							
 								$data = array();
-								$return = array();
+								
 								
 								$data = $this->$model->$method_name($input);	
-								
-								if(!$data)
-								{
-									if(empty($data['error']))
-									{
-										$return['status'] = $this->getReturnStatus('400','Something went wrong');
-									} else {
-										$return['status'] = $this->getReturnStatus('400',(string) $data['error']);
-									}
-								} else {
-									$dimension = dimensions($data);
-									switch ($dimension) {
-										case '0':
-											$return['data'] = (array) $data;
-											$return['status'] = $this->getReturnStatus('200');
-										break;
-										
-										case '1':
-											$return['data'] = $data;
-											$return['status'] = $this->getReturnStatus('200');
-										break;
-																					
-										case '2':
-											if(isset($data['data']))
-											{
-												$return['data'] = $data['data'];
-												$return['status'] = $this->getReturnStatus('200');
-											} else {
-												$return['status'] = $this->getReturnStatus('400','Data format is wrong');
-											}
-										break;
-									}
-								}								
-								$this->response($return, $this->status_code);
-								return;
+								$this->output($data);
 							}
 						}
 					}		
@@ -367,27 +333,70 @@ class Api extends REST_Controller
 			//if we are still here than a wrong method has been passed
 			if(!empty($calledMethod))
 			{
-				$return['status'] = $this->getReturnStatus('404','The object '.$model.' has no public method called '.$calledMethod);
-				$this->response($return, $this->status_code);
+				$this->setReturnStatus('404','The object '.$model.' has no public method called '.$calledMethod);
+				$this->output(false);
 				return;
 			}			
 		}
 		return true;
 	}
 	
-	private function getReturnStatus($http_status, $error_message = null)
+	private function setReturnStatus($http_status, $error_message = null)
 	{
 		$this->finished = mktime();
 		$this->duration = $this->finished - $this->started;
 		$this->status_code = $http_status;  //TODO Should I check if the status is in the standard set for REST?
 		if($this->status_code != '200') $this->error_message = $error_message;
+	}
+	
+	private function output($data)
+	{
+		$return = array();
 		
-		$status = array();
-		$status['finished'] = $this->finished;
-		$status['duration'] = $this->duration;
-		$status['status_code'] = $this->status_code;
-		if(!empty($this->error_message)) $status['error_message'] = $this->error_message;  
+		if(!$data)
+		{
+			if(empty($data['error']))
+			{
+				if(empty($this->status_code) or empty($this->error_message))
+				{
+					$return['status'] = $this->setReturnStatus('400','Something went wrong');
+				}
+			} else {
+				$return['status'] = $this->setReturnStatus('400',(string) $data['error']);
+				unset($data['error']); //cleanup data from errors
+			}
+		} else {
+			$dimension = dimensions($data);
+			switch ($dimension) {
+				case '0':
+					$return['data'] = (array) $data;
+					$return['status'] = $this->setReturnStatus('200');
+					break;
 		
-		return $status;
+				case '1':
+					$return['data'] = $data;
+					$return['status'] = $this->setReturnStatus('200');
+					break;
+						
+				case '2':
+					if(isset($data['data']))
+					{
+						$return['data'] = $data['data'];
+						$return['status'] = $this->setReturnStatus('200');
+					} else {
+						$return['status'] = $this->setReturnStatus('400','Data format is wrong');
+					}
+					break;
+			}
+		}
+		
+		
+		$return['status']['finished'] = $this->finished;
+		$return['status']['duration'] = $this->duration;
+		$return['status']['status_code'] = $this->status_code;
+		if(!empty($this->error_message)) $return['status']['error_message'] = $this->error_message;
+				
+		$this->response($return, $this->status_code);
+		return;		
 	}
 }

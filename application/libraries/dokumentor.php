@@ -48,9 +48,10 @@ class Dokumentor extends CI_Controller {
 		foreach ($objects as $key => $object) {
 			
 			//let's check if the required object is an exposed object
-			$exposedObjects = $this->config->item('exposeObj');
-			if(!$exposedObjects) return false;
-			if(!isset($exposedObjects[$object])) break;
+			//NO! because when a spark contains more than one object we don't know how many objects are exposed
+// 			$exposedObjects = $this->config->item('exposeObj');
+// 			if(!$exposedObjects) return false;
+//			if(!isset($exposedObjects[$object])) break; 
 			
 			$tmp_methods = $this->rest->get('methods', array('object' => $object,
 											 			 'format' => 'json'));			
