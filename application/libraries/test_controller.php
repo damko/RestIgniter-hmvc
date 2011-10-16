@@ -18,6 +18,7 @@ class Test_Controller extends CI_Controller {
 	
 	protected function arrayReturn($method, $rest_return, $note = null)
 	{
+		if(empty($note)) $note = 'I expect an array in return';
 		echo $this->unit->run($rest_return, 'is_array', $method.'- array in return ?', $note);
 	}
 	
@@ -31,14 +32,16 @@ class Test_Controller extends CI_Controller {
 	{
 		$expected_result = false;
 		$test = $this->anyError($rest_return);
-		echo $this->unit->run($test, $expected_result, $method.' Any REST error ?', 'I expect there should be no REST error');
+		if(empty($note)) $note = 'I expect there should be no REST error';
+		echo $this->unit->run($test, $expected_result, $method.' Any REST error ?', $note);
 	}
 
 	protected function checkRestError($method, $rest_return, $note = null)
 	{
 		$expected_result = true;
 		$test = $this->anyError($rest_return);
-		echo $this->unit->run($test, $expected_result, $method.' Any REST error ?', 'I expect a REST error');
+		if(empty($note)) $note = 'I expect a REST error';
+		echo $this->unit->run($test, $expected_result, $method.' Any REST error ?', $note);
 	}
 		
 	protected function check200($method, $rest_return, $note = null)
@@ -46,6 +49,7 @@ class Test_Controller extends CI_Controller {
 		$expected_result = '200';
 		$test = (array) $rest_return['status'];
 		$test = $test['status_code'];
+		if(empty($note)) $note = 'I expect a 200';
 		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
 	}
 
@@ -54,7 +58,8 @@ class Test_Controller extends CI_Controller {
 		$expected_result = '400';
 		$test = (array) $rest_return['status'];
 		$test = $test['status_code'];
-		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
+		if(empty($note)) $note = 'I expect a 400';
+		echo $this->unit->run($test, $expected_result, $method.'- status code == 400 ?', $note);
 	}
 
 	protected function check404($method, $rest_return, $note = null)
@@ -62,7 +67,8 @@ class Test_Controller extends CI_Controller {
 		$expected_result = '404';
 		$test = (array) $rest_return['status'];
 		$test = $test['status_code'];
-		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
+		if(empty($note)) $note = 'I expect a 404';
+		echo $this->unit->run($test, $expected_result, $method.'- status code == 404 ?', $note);
 	}
 		
 	protected function printReturn($rest_return)
