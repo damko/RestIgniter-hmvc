@@ -31,9 +31,16 @@ class Test_Controller extends CI_Controller {
 	{
 		$expected_result = false;
 		$test = $this->anyError($rest_return);
-		echo $this->unit->run($test, $expected_result, $method.'- any REST error ?', $null);
+		echo $this->unit->run($test, $expected_result, $method.' Any REST error ?', 'I expect there should be no REST error');
 	}
-	
+
+	protected function checkRestError($method, $rest_return, $note = null)
+	{
+		$expected_result = true;
+		$test = $this->anyError($rest_return);
+		echo $this->unit->run($test, $expected_result, $method.' Any REST error ?', 'I expect a REST error');
+	}
+		
 	protected function check200($method, $rest_return, $note = null)
 	{
 		$expected_result = '200';
