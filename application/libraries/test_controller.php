@@ -48,7 +48,23 @@ class Test_Controller extends CI_Controller {
 		$test = $test['status_code'];
 		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
 	}
-	
+
+	protected function check400($method, $rest_return, $note = null)
+	{
+		$expected_result = '400';
+		$test = (array) $rest_return['status'];
+		$test = $test['status_code'];
+		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
+	}
+
+	protected function check404($method, $rest_return, $note = null)
+	{
+		$expected_result = '404';
+		$test = (array) $rest_return['status'];
+		$test = $test['status_code'];
+		echo $this->unit->run($test, $expected_result, $method.'- status code == 200 ?', $note);
+	}
+		
 	protected function printReturn($rest_return)
 	{
 		echo '<h3>REST return</h3>';
