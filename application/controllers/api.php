@@ -378,8 +378,7 @@ class Api extends REST_Controller
 			switch ($dimension) {
 				case '0':
 					$return['data'] = (array) $data;
-					$return['status'] = $this->setReturnStatus('200');
-					break;
+				break;
 		
 				default:
 					$return['data'] = $data;
