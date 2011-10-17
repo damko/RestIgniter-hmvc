@@ -360,7 +360,7 @@ class Api extends REST_Controller
 				$this->setReturnStatus('400','Something went wrong');
 			}
 		} else {
-			if(!empty($data['error']))
+			if(is_array($data) and !empty($data['error']))
 			{
 				$this->setReturnStatus('400',(string) $data['error']);
 				unset($data['error']); //cleanup data from errors
@@ -368,7 +368,7 @@ class Api extends REST_Controller
 				$this->setReturnStatus('200');
 			}
 			
-			if(!empty($data['RestStatus']))
+			if(is_array($data) and !empty($data['RestStatus']))
 			{
 				$return['status'] = $data['RestStatus'];
 				unset($data['RestStatus']);
