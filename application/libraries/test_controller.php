@@ -4,6 +4,8 @@
 
 class Test_Controller extends CI_Controller {
 
+	public $show_rest_return=true;
+	
 	public function __construct()
 	{
 		//load the embedded unit_test library
@@ -73,6 +75,8 @@ class Test_Controller extends CI_Controller {
 		
 	protected function printReturn($rest_return)
 	{
+		if(!$this->show_rest_return) return;
+		
 		echo '<h3>REST return</h3>';
 		echo '<pre style="font-size: 9px; background-color: #e8e8e8;">';
 		print_r($rest_return);
