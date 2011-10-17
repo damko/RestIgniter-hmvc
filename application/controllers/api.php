@@ -368,9 +368,12 @@ class Api extends REST_Controller
 				$this->setReturnStatus('200');
 			}
 			
-			$return['data'] = $data;
-						
-/*
+			if(!empty($data['RestStatus']))
+			{
+				$return['status'] = $data['RestStatus'];
+				unset($data['RestStatus']);
+			}
+					
  			$dimension = dimensions($data);
 			switch ($dimension) {
 				case '0':
@@ -378,28 +381,16 @@ class Api extends REST_Controller
 					$return['status'] = $this->setReturnStatus('200');
 					break;
 		
-				case '1':
+				default:
 					$return['data'] = $data;
-					$return['status'] = $this->setReturnStatus('200');
-					break;
-						
-				case '2':
-					if(isset($data['data']))
-					{
-						$return['data'] = $data['data'];
-						$return['status'] = $this->setReturnStatus('200');
-					} else {
-						$return['status'] = $this->setReturnStatus('400','Data format is wrong');
-					}
-					break;
+				break;
 			} 
-*/
+
 		}
 		
-		
-		$return['status']['finished'] = $this->finished;
-		$return['status']['duration'] = $this->duration;
-		$return['status']['status_code'] = $this->status_code;
+		if(!empty($this->finished)) $return['status']['finished'] = $this->finished;
+		if(!empty($this->duration)) $return['status']['duration'] = $this->duration;
+		if(!empty($this->status_code)) $return['status']['status_code'] = $this->status_code;
 		if(!empty($this->error_message)) $return['status']['error_message'] = $this->error_message;
 				
 		$this->response($return, $this->status_code);
