@@ -8,3 +8,6 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /trash
+/.project
+/.buildpath
+/.*
