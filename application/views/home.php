@@ -88,12 +88,14 @@ div#left{
 </head>
 <body>
 
-<h1>RestIgniter</h1>
+<h1>RestIgniter-HMVC</h1>
 
 <div id="container">
 <p>
-Rest Igniter is <a href="http://codeigniter.com/" target="_blank">Code Igniter</a> (stable version 2.0.3) plus <a href="http://getsparks.org" target="_blank">Sparks</a> and Rest support. 
-<b>In addiction, its aim is to allow an easy share of php objects over REST.</b>
+Rest Igniter - hmvc is Rest Igniter plus <a href="https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc/" target="_blank">HMVC</a> support which also means that it is 
+<a href="http://codeigniter.com/" target="_blank">Code Igniter</a> (stable version 2.0.3) plus <a href="http://getsparks.org" target="_blank">Sparks</a> plus 
+<a href="https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc/" target="_blank">HMVC</a> and Rest support. 
+
 </p>
     <div id="right">
     	<h2>References</h2>
@@ -113,12 +115,14 @@ Rest Igniter is <a href="http://codeigniter.com/" target="_blank">Code Igniter</
     	
     	<h2>Add-ons</h2>
     	<ul>
-    		<li><a href="">ri_ldap</a>: an easy spark library to operate with ldap</li>
-    		<li><a href="">ri_contact_engine</a>: a spark library to handle People Organizations and Locations</li>
+    		<li><a href="https://github.com/damko/ri_ldap" target="_blank">ri_ldap</a>: a simple spark addon library to operate with ldap</li>
+    		<li><a href="https://github.com/damko/ri_contact_engine" target="_blank">ri_contact_engine</a>: a spark addon library to handle People Organizations and Locations</li>
     	</ul>
     	
     	<h2>Applications using R.I.</h2>
     	<ul>
+    		<li><a href="https://github.com/damko/Contact-Engine" target="_blank">Contact Engine</a>: ready to go implementation of Rest Igniter plus ri_contact_engine. Just download the code, setup up the ldap settings and you are done.</li>
+    		<li><a href="https://github.com/damko/RestIgniter-hmvc" target="_blank">RestIgniter-hmvc</a>: RestIgniter with modular-extensions-hmvc support</li>
     		<li><a href="">MCB-SB</a>: an invoice manager for small businesses based on <a href="http://www.myclientbase.com" target="_blank">MCB</a></li>
     	</ul>    	 	    	    	 	
     </div>
