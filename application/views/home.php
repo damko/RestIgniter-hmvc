@@ -123,7 +123,7 @@ Rest Igniter - hmvc is Rest Igniter plus <a href="https://bitbucket.org/wiredesi
     	<ul>
     		<li><a href="https://github.com/damko/Contact-Engine" target="_blank">Contact Engine</a>: ready to go implementation of Rest Igniter plus ri_contact_engine. Just download the code, setup up the ldap settings and you are done.</li>
     		<li><a href="https://github.com/damko/RestIgniter-hmvc" target="_blank">RestIgniter-hmvc</a>: RestIgniter with modular-extensions-hmvc support</li>
-    		<li><a href="">MCB-SB</a>: an invoice manager for small businesses based on <a href="http://www.myclientbase.com" target="_blank">MCB</a></li>
+    		<li><a href="https://github.com/damko/MyClientBase-SB" target="_blank">MCB-SB</a>: an invoice manager for small businesses based on <a href="http://www.myclientbase.com" target="_blank">MCB</a></li>
     	</ul>    	 	    	    	 	
     </div>
     <div id="left"><img src="images/restigniter.png"></div>
