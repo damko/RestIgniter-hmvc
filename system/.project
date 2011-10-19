@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>CI_system</name>
+	<comment></comment>
+	<projects>
+		<project>contact-engine</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.dltk.core.scriptbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.php.core.PHPNature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>com.nwire.studio.tools.nwireNature</nature>
+	</natures>
+</projectDescription>
