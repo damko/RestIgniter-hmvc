@@ -1,0 +1,47 @@
+This is just a personal memo.
+
+To set up this project I followed these steps:
+
+#cloning rest-igniter
+git clone https://damko@github.com/damko/RestIgniter.git restigniter-hmvc  
+
+cd restigniter-hmvc/
+
+#modify git configuration as a workaround for github issue (you can't clone your own projects)
+vim .git/config
+		[core]
+		        repositoryformatversion = 0
+		        filemode = true
+		        bare = false
+		        logallrefupdates = true
+		[remote "origin"]
+		        fetch = +refs/heads/*:refs/remotes/origin/*
+		        url = https://damko@github.com/damko/RestIgniter-hmvc.git
+		[branch "master"]
+		        remote = origin
+		        merge = refs/heads/master
+
+#adding the original repo as an upstream source
+git remote add upstream https://damko@github.com/damko/RestIgniter.git 
+
+#pushing the code on github
+git push -u origin master  
+
+#getting HMVC from the official repo
+cd ..
+hg clone ssh://hg@bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc
+cd codeigniter-modular-extensions-hmvc
+
+#moving the third_party/MX directory into RestIgniter-hmvc
+mv third_party/MX ../restigniter-hmvc/
+
+#adding Dam's patches from codeigniter-hmvc-and-sparks project
+cd ../restigniter-hmvc/application/core
+wget https://bitbucket.org/damiano/codeigniter-hmvc-and-sparks/raw/168a9d5c33f3/application/core/MY_Loader.php
+wget https://bitbucket.org/damiano/codeigniter-hmvc-and-sparks/raw/168a9d5c33f3/application/core/MY_Router.php
+
+cd ../third_party/MX/
+rm Loader.php
+rm Modules.php
+wget https://bitbucket.org/damiano/codeigniter-hmvc-and-sparks/raw/168a9d5c33f3/application/third_party/MX/Loader.php
+wget https://bitbucket.org/damiano/codeigniter-hmvc-and-sparks/raw/168a9d5c33f3/application/third_party/MX/Modules.php
