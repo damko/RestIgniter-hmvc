@@ -36,7 +36,9 @@ class REST_Controller extends CI_Controller {
 			// How is this request being made? POST, DELETE, GET, PUT?
 			$this->request->method = $this->_detect_method();
 
-			$this->load->library('security');
+			//$this->load->library('security');
+			//DAM
+			$this->load->helper('security');
 
 			// Check if there is a specific auth type for the current class/method
 			$this->auth_override = $this->_auth_override_check();
